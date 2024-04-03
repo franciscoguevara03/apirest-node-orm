@@ -1,0 +1,22 @@
+{
+  "name": "apirest-node-orm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "autor": "Ing. Francisco Guevara",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "prisma": "^5.12.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.12.0",
+    "express": "^4.19.2"
+  }
+}
