@@ -5,13 +5,13 @@ import { prisma } from '../db.js'
 const router = Router()
 
 //  Rutas para Obtener a todos los Usuarios
-router.get('/user', async (req, res) => {
+router.get('/api/user', async (req, res) => {
   const users = await prisma.user.findMany()
   res.json(users)
 })
 
 //  Rutas para Obtener un usuario segun su ID
-router.get('/user/:id', async (req, res) => {
+router.get('/api/user/:id', async (req, res) => {
   const userFound = await prisma.user.findFirst({
     where: {
       id: parseInt(req.params.id)
@@ -28,7 +28,7 @@ router.get('/user/:id', async (req, res) => {
 
 
 //  Rutas para Crear un usuario
-router.post('/user', async (req, res) => {
+router.post('/api/user', async (req, res) => {
   const newUser = await prisma.user.create({
     data: req.body,
   })
@@ -36,7 +36,7 @@ router.post('/user', async (req, res) => {
 })
 
 //  Rutas para Actualizar un usuario por ID
-router.put('/user/:id', async (req, res) => {
+router.put('/api/user/:id', async (req, res) => {
   const userFound = await prisma.user.findFirst({
     where: {
       id: parseInt(req.params.id)
@@ -55,7 +55,7 @@ router.put('/user/:id', async (req, res) => {
 })
 
 //  Rutas para Borrar un usuario segun el ID
-router.delete('/user/:id', async (req, res) => {
+router.delete('/api/user/:id', async (req, res) => {
   const userFound = await prisma.user.findFirst({
     where: {
       id: parseInt(req.params.id)
