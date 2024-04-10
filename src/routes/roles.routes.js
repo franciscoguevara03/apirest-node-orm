@@ -1,5 +1,5 @@
 import { Router } from 'express'
-
+import 'dotenv/config'
 import { prisma } from '../db.js'
 
 const router = Router()
@@ -10,7 +10,7 @@ router.get('/roles', async (req, res) => {
       user: true
     }
   })
-  res.json(roles)
+  res.json({CodigoResp: process.env.CREATED_ROL_MSG, roles})
 })
 
 export default router

@@ -9,7 +9,7 @@ const router = Router()
 //  Rutas para Obtener a todos los Usuarios
 router.get('/user',verifyToken ,async (req, res) => {
   const users = await prisma.user.findMany()
-  res.json(users)
+  res.json({CodigoResp: process.env.USERS_LIST_MSG, users})
 })
 
 //  Rutas para Obtener un usuario segun su ID
@@ -23,9 +23,9 @@ router.get('/user/:id',verifyToken, async (req, res) => {
     }
   })
 
-  if(!userFound) return res.status(404).json({error: "Usuario no encontrado"})
+  if(!userFound) return res.status(404).json({error: process.env.ERROR_USER_MSG})
 
-  return res.json(userFound)
+  return res.json({CodigoResp: process.env.USER_FOUND_MSG, userFound})
 })
 
 
@@ -37,14 +37,14 @@ router.post('/user',verifyToken, async (req, res) => {
     },
   })
 
-  if(userFound) return res.status(404).json({error: "Este nombre de Usuario ya ha sido"})
+  if(userFound) return res.status(404).json({error: process.env.ERROR_USER_DUPLICATED_MSG})
 
   const saltRounds = bcrypt.genSaltSync(10)
   
   bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
     if (err) {
       console.log(err)
-      res.status(500).send('Error en la encriptación de la contraseña')
+      res.status(500).send(process.env.ERROR_PASSWORD_ENCRYPT_MSG)
     } else {
       await prisma.user.create({
         data: {
@@ -58,18 +58,15 @@ router.post('/user',verifyToken, async (req, res) => {
         },
       })
       .then(newUser => {
-        res.json(newUser)
+        res.json({CodigoResp: process.env.CREATED_USER_MESG, newUser})
       })
       .catch(prismaError => {
         console.log(prismaError)
-        res.status(500).send('Error al crear el usuario')
+        res.status(500).send(process.env.ERROR_USER_NOT_CREATED_MSG)
       })
     }
   })
 })
-
-
-
 
 //  Rutas para Actualizar un usuario por ID
 router.put('/user/:id',verifyToken, async (req, res) => {
@@ -81,7 +78,7 @@ router.put('/user/:id',verifyToken, async (req, res) => {
     },
   })
 
-  if(!userFound) return res.status(404).json({error: "Usuario no encontrado"})
+  if(!userFound) return res.status(404).json({error: process.env.ERROR_USER_NOT_FOUND_MSG})
   if(!req.body.password){
     const userUpdate = await prisma.user.update({
       where: {
@@ -89,13 +86,13 @@ router.put('/user/:id',verifyToken, async (req, res) => {
       },
       data: req.body
     })
-    return res.json(userUpdate)
+    return res.json({CodigoResp: process.env.UPDATED_USER_MESG, userUpdate})
   } else { 
 
     bcrypt.hash(req.body.password, saltRounds, async  function(err, hash) {
       if (err) {
         console.log(err)
-        res.status(500).send('Error en la encriptación de la contraseña')
+        res.status(500).send(process.env.ERROR_PASSWORD_ENCRYPT_MSG)
       } else {
         const userUpdate = await prisma.user.update({
           where: {
@@ -116,9 +113,9 @@ router.put('/user/:id',verifyToken, async (req, res) => {
         })
         .catch(prismaError => {
           console.log(prismaError)
-          res.status(500).send('Error al crear el usuario')
+          res.status(500).send(process.env.ERROR_USER_NOT_CREATED_MSG)
         })
-        return res.json(userUpdate)
+        return res.json({CodigoResp: process.env.UPDATED_USER_MESG, userUpdate})
       }
     })
   }
@@ -132,7 +129,7 @@ router.delete('/user/:id',verifyToken, async (req, res) => {
     },
   })
 
-  if(!userFound) return res.status(404).json({error: "Usuario no encontrado"})
+  if(!userFound) return res.status(404).json({error: process.env.ERROR_USER_NOT_FOUND_MSG})
 
   const userDeleted = await prisma.user.delete({
     where: {
@@ -140,7 +137,7 @@ router.delete('/user/:id',verifyToken, async (req, res) => {
     },
   })
 
-  return res.json({CodigoResp: "Ok",userDeleted})
+  return res.json({CodigoResp: process.env.DELETED_USER_MSG, userDeleted})
 })
 
 export default router

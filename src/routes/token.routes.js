@@ -15,17 +15,17 @@ router.post("/login", async(req, res) => {
     },
   })
 
-  if(!userFound) return res.status(404).json({error: "Usuario no encontrado"})
+  if(!userFound) return res.status(404).json({error: process.env.ERROR_USER_MSG})
 
   if (bcrypt.compareSync(password, userFound.password)) {
     const token = jwt.sign({ id: userFound.id, user: userFound.username }, process.env.KEY_TOKEN , {
-      expiresIn: "1m"
+      expiresIn: process.env.TOKEN_EXPIRE
     })
-    console.log("Acceso", true);
+    console.log(process.env.ACCESS_MSG, true);
     return res.status(200).send({ token, name: userFound.username, id: userFound.id });
   } else {
-    console.log("Usuario o Contraseña incorrectos", false)
-    return res.status(401).send({ error: "Usuario o Contraseña incorrectos" })}
+    console.log(process.env.ERROR_USER_PASSWORD_MSG, false)
+    return res.status(401).send({ error: process.env.ERROR_USER_PASSWORD_MSG })}
   
 })
   
