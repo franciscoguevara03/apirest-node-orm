@@ -5,22 +5,28 @@ import 'dotenv/config'
 import verifyToken from '../middleware/auth.js'
 import { getUsers, getUserById, getUserByUsername, createUser } from '../controllers/user.controller.js'
 import log_details from '../utils/log_details.js'
+import logger from '../log/log_conf.js'
 
 const router = Router()
+
+
 
 //  Rutas para Obtener a todos los Usuarios
 router.get('/user',verifyToken ,async (req, res) => {
   if(!req.authData) return res.status(404).json({error: process.env.ERROR_USER_MSG})
 
+  const { method, path, url } = req
+
   try {
     const users = await getUsers()
+
+    logger.info(`Método: ${method}|Ruta: ${path}|Fecha y hora: ${new Date().toISOString()}|URL: ${url}|Nombre de usuario: ${req.authData ? req.authData.user : 'No autenticado'}`)
+    
     res.json({CodigoResp: process.env.USERS_LIST_MSG, users})
   } catch (error) {
     console.log(error, process.env.ERROR_FUNCT_NOT_FOUND_MSG )
     res.json({error: process.env.ERROR_FUNCT_NOT_FOUND_MSG})
   }
-
-  console.log(log_details(req, router.name))
 
 })
 
