@@ -8,6 +8,7 @@ const app = express()
 
 app.use(express.json())
 
+app.use("/", "API BCV")
 app.use("/api", tokenRoutes)
 app.use("/api", userRoutes)
 app.use("/api", rolesRoutes)

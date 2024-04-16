@@ -10,7 +10,6 @@ import logger from '../log/log_conf.js'
 const router = Router()
 
 
-
 //  Rutas para Obtener a todos los Usuarios
 router.get('/user',verifyToken ,async (req, res) => {
   if(!req.authData) return res.status(404).json({error: process.env.ERROR_USER_MSG})
