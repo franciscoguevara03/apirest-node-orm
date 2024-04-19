@@ -7,6 +7,12 @@ fecha.setDate(fecha.getDate() + diasParaSumar)
 
 console.log(fecha)
 
+/**
+ * Creates a token for the given user.
+ *
+ * @param {Object} user - The user object for whom the token is created
+ * @return {string} The encoded token for the user
+ */
 export const createToken = function (user) {
   var payload = {
     sub: user._id,
