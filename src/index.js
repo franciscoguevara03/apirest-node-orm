@@ -3,8 +3,10 @@ import express from 'express'
 import userRoutes from './routes/user.routes.js'
 import rolesRoutes from './routes/roles.routes.js'
 import tokenRoutes from './routes/token.routes.js'
+import 'dotenv/config'
 
 const app = express()
+const puerto = process.env.PORT
 
 app.use(express.json())
 
@@ -16,5 +18,5 @@ app.use("/api", tokenRoutes)
 app.use("/api", userRoutes)
 app.use("/api", rolesRoutes)
 
-app.listen(3000)
-console.log('Server on Port', 3000)
+puerto ? app.listen(puerto) : app.listen(3000)
+console.log('Server on Port', process.env.PORT)
