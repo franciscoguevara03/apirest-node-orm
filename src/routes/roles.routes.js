@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import 'dotenv/config'
 import { prisma } from '../db.js'
-import { createRol } from '../controllers/roles.controller.js'
+// import { createRol } from '../controllers/roles.controller.js'
 
 const router = Router()
 
@@ -13,7 +13,7 @@ router.get('/roles', async (req, res) => {
   })
   res.json({CodigoResp: process.env.CREATED_ROL_MSG, roles})
 })
-
+/*
 router.post('/roles', async (req, res) => {
   const roles = await prisma.roles.findFirst({
     include: {
@@ -34,6 +34,6 @@ router.post('/roles', async (req, res) => {
   }
 
   res.json({CodigoResp: 'Rol Creado Correctamente Final ', roles})
-})
+})*/
 
 export default router
