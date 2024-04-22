@@ -9,7 +9,7 @@ const router = Router()
 
 router.get('/changetypeall', (req, res) => {
   try {
-    axios.get(process.env.URL_FECTH_ALL, { httpsAgent: new https.Agent({ rejectUnauthorized: false }) })
+    axios.get(process.env.URL_FECTH, { httpsAgent: new https.Agent({ rejectUnauthorized: false }) })
       .then(response => {
         const $ = cheerio.load(response.data)
         const dolar = $('#dolar').find('div').find('div').find('div').eq(1).find('strong').text()
@@ -38,7 +38,7 @@ router.get('/changetypeall', (req, res) => {
 
 router.get('/changetypedolar', (req, res) => {
   try {
-    axios.get(process.env.URL_FECTH_DOLAR, { httpsAgent: new https.Agent({ rejectUnauthorized: false }) })
+    axios.get(process.env.URL_FECTH, { httpsAgent: new https.Agent({ rejectUnauthorized: false }) })
       .then(response => {
         const $ = cheerio.load(response.data)
         const dolar = $('#dolar').find('div').find('div').find('div').eq(1).find('strong').text()
