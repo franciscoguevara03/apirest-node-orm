@@ -1,11 +1,12 @@
 import { Router } from 'express'
 import 'dotenv/config'
 import { prisma } from '../db.js'
+import verifyToken from '../middleware/auth.js'
 // import { createRol } from '../controllers/roles.controller.js'
 
 const router = Router()
 
-router.get('/roles', async (req, res) => {
+router.get('/roles',verifyToken, async (req, res) => {
   const roles = await prisma.roles.findMany({
     include: {
       user: true
