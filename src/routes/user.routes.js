@@ -12,7 +12,7 @@ const router = Router()
 
 //  Rutas para Obtener a todos los Usuarios
 router.get('/user',async (req, res) => {
-  if(!req.authData) return res.status(404).json({error: process.env.ERROR_USER_MSG})
+  //if(!req.authData) return res.status(404).json({error: process.env.ERROR_USER_MSG})
 
   const { method, path, url } = req
 
