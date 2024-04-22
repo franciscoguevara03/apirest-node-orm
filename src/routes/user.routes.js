@@ -51,7 +51,7 @@ router.get('/user/:id',verifyToken, async (req, res) => {
 
 
 //  Rutas para Crear un usuario
-router.post('/user',verifyToken, async (req, res) => {
+router.post('/user', async (req, res) => {
 
   const userFound = await getUserByUsername(req.body.username)
 

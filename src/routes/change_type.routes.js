@@ -3,11 +3,12 @@ import 'dotenv/config'
 import axios from 'axios'
 import cheerio from 'cheerio'
 import https from 'https'
+import verifyToken from '../middleware/auth.js'
 
 
 const router = Router()
 
-router.get('/changetypeall', (req, res) => {
+router.get('/changetypeall',verifyToken, (req, res) => {
   try {
     axios.get(process.env.URL_FECTH, { httpsAgent: new https.Agent({ rejectUnauthorized: false }) })
       .then(response => {
@@ -36,7 +37,7 @@ router.get('/changetypeall', (req, res) => {
 
 })
 
-router.get('/changetypedolar', (req, res) => {
+router.get('/changetypedolar',verifyToken, (req, res) => {
   try {
     axios.get(process.env.URL_FECTH, { httpsAgent: new https.Agent({ rejectUnauthorized: false }) })
       .then(response => {
